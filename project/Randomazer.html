@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Randomizer</title>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+<a href="Firstwindow.html">Главная страница</a><br>
+<H1 style="font-size: 120%; font-family: Verdana, Arial, Helvetica, sans-serif; color: 	#000000">
+<br>
+Первое число
+<input type="number" id="from" value="0"><br><br>
+Второе число
+<input type="number" id="to" value="0"><br>
+<br>
+Кол-во чисел сгенерировать?
+<input type="number" id="counter" value="0"><br>
+
+<button id="generate" onclick="generate()">Сгенерировать</button>
+
+<ul>
+
+</ul>
+
+<script>
+
+
+
+   function generate() {
+       let ul1 = document.querySelector("ul");
+       let from = document.body.querySelector('#from');
+       let to = document.body.querySelector('#to');
+       let counter = document.body.querySelector('#counter');
+
+
+       while (document.querySelector("li")) {
+           document.querySelector("li").remove();
+       }
+
+       let range = validateData(from, to, counter);
+
+       let interval = fillArrayFromTo(from, range);
+
+       buildValuesList(counter, interval, ul1);
+
+   }
+
+   function validateData(from, to, counter) {
+
+       let range = (+to.value) - (+from.value);
+       if (counter.value >= range) {
+           alert("There no sens to generate!");
+           location.reload();
+           return false;
+       }
+       return range;
+   }
+
+   function fillArrayFromTo(from, range) {
+
+       let interval = [];
+       let iter = +from.value;
+       for (let i = 0; i <= range; i++) {
+           interval.push(iter);
+           iter++;
+       }
+       return interval;
+   }
+
+   function buildValuesList(counter, interval, ul1) {
+
+       for (let i = 0; i < counter.value; i++) {
+           let ran;
+           ran = Math.random() * (interval.length);
+           ran = Math.floor(ran);
+           let elem = document.createElement("li");
+           let elemText = document.createTextNode(interval[ran]);
+           elem.appendChild(elemText);
+           ul1.appendChild(elem);
+           interval.splice(ran, 1);
+       }
+   }
+
+
+</script>
+
+</body>
+</html>
